@@ -20,8 +20,11 @@ def FE_1(train_, test_):
     train = train_.copy()
     test = test_.copy()
 
-    train["시술 당시 나이"] = train["시술 당시 나이"].apply(lambda x: (int(x[1:3]) + int(x[4:6]))/2 if x[2] != "수" else -1)
-    test["시술 당시 나이"] = test["시술 당시 나이"].apply(lambda x: (int(x[1:3]) + int(x[4:6]))/2 if x[2] != "수" else -1)
+    train["시술 당시 나이__"] = train["시술 당시 나이"].apply(lambda x: (int(x[1:3]) + int(x[4:6]))/2 if x[2] != "수" else -1)
+    test["시술 당시 나이__"] = test["시술 당시 나이"].apply(lambda x: (int(x[1:3]) + int(x[4:6]))/2 if x[2] != "수" else -1)
+
+    train = train.drop(columns = "시술 당시 나이")
+    test = test.drop(columns = "시술 당시 나이")
 
     return train, test
 
@@ -96,9 +99,12 @@ def FE_5(train_, test_):
     train = train_.copy()
     test = test_.copy()
 
-    for col in ["총 시술 횟수", "클리닉 내 총 시술 횟수", "IVF 시술 횟수", "DI 시술 횟수", "총 임신 횟수", "IVF 임신 횟수", "DI 임신 횟수", "총 출산 횟수", "IVF 출산 횟수", "DI 출산 횟수"]:
+    for col in ["총 시술 횟수__", "클리닉 내 총 시술 횟수__", "IVF 시술 횟수__", "DI 시술 횟수__", "총 임신 횟수__", "IVF 임신 횟수__", "DI 임신 횟수__", "총 출산 횟수__", "IVF 출산 횟수__", "DI 출산 횟수__"]:
         train[col] = train[col].apply(lambda x: int(x[0]))
         test[col] = test[col].apply(lambda x: int(x[0]))
+
+    train = train.drop(columns = ["총 시술 횟수", "클리닉 내 총 시술 횟수", "IVF 시술 횟수", "DI 시술 횟수", "총 임신 횟수", "IVF 임신 횟수", "DI 임신 횟수", "총 출산 횟수", "IVF 출산 횟수", "DI 출산 횟수"])
+    test = test.drop(columns = ["총 시술 횟수", "클리닉 내 총 시술 횟수", "IVF 시술 횟수", "DI 시술 횟수", "총 임신 횟수", "IVF 임신 횟수", "DI 임신 횟수", "총 출산 횟수", "IVF 출산 횟수", "DI 출산 횟수"])
     
     return train, test
 
